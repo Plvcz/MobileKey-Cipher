@@ -81,12 +81,36 @@ d → $
 ! →
 Result: -3))0>~204)$
 
-## Usage (LuaU)
-Encoding:
-MobileKey:encode("Hello, World!")  --> -3))0>~204)$
+## Example Usage (Only in Roblox studio)
+```lua
+local MobileKey = require("MobileKey")
 
-Decoding:
-MobileKey:decode("-3))0>~204)$<")  --> hello, world!
+-- Basic encoding
+print(MobileKey:encode("Hello, World!"))
+--> -3))0>~204)$
+
+-- Basic decoding
+print(MobileKey:decode("-3))0>~204)$ hello, world!
+
+-- Roundtrip test
+print(MobileKey:roundtrip("Hello, World!"))
+--> hello, world!  ✓
+
+-- Adding a custom mapping
+MobileKey:addMapping("?", "%")
+print(MobileKey:encode("what?"))
+--> 2-@5%
+
+-- Removing a mapping
+MobileKey:removeMapping("?")
+print(MobileKey:encode("what?"))
+--> 2-@5?  (passes through unchanged)
+
+-- ARG/Lore usage
+local lore = "The ancient one awakens"
+print(MobileKey:encode(lore))  --> 5-3~@!'83!5~0!3~@2@(3!#
+print(MobileKey:decode(MobileKey:encode(lore)))  --> the ancient one awakens
+```
 
 ## Limitations
 - Decoding restores text in **lowercase** since the cipher is case-insensitive
@@ -94,4 +118,4 @@ MobileKey:decode("-3))0>~204)$<")  --> hello, world!
 - Not cryptographically secure, I use this for Lore, Character stuffs, and ARG's (most reccomended as this is an unknown type of Ciphering)
 
 ## License
-MIT, do whatever you want with it! Even add your own symbols!
+MIT, do whatever you want with it! Even add your own symbols! Or use it in videos or games, or make your own version that lets everyone use this Useless cipher!
