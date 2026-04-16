@@ -1,5 +1,6 @@
 # MobileKey Cipher
-A simple encoding scheme I came up with while bored in Roblox Studio and Discord
+
+A simple encoding stuff I came up with while bored in Roblox Studio and Discord
 
 ## What is it?
 MobileKey Cipher is a substitution cipher inspired by the symbol layer 
