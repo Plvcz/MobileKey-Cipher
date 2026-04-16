@@ -83,7 +83,7 @@ Result: -3))0>~204)$
 
 ## Example Usage (Only in Roblox studio)
 ```lua
-local MobileKey = require("MobileKey")
+local MobileKey = require(PATHTOMODULE)
 
 -- Basic encoding
 print(MobileKey:encode("Hello, World!"))
