@@ -1,0 +1,135 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);color:var(--color-text-primary)}
+.site{max-width:680px;margin:0 auto;padding:2rem 1rem}
+.hero{text-align:center;padding:3rem 0 2rem}
+.hero h1{font-size:2rem;font-weight:500;letter-spacing:-0.5px}
+.hero p{font-size:1rem;color:var(--color-text-secondary);margin-top:0.5rem;line-height:1.6}
+.badge{display:inline-block;font-size:11px;font-weight:500;padding:3px 10px;border-radius:99px;border:0.5px solid var(--color-border-secondary);color:var(--color-text-secondary);margin-bottom:1rem}
+section{margin:2.5rem 0}
+h2{font-size:1.1rem;font-weight:500;margin-bottom:1rem;padding-bottom:0.5rem;border-bottom:0.5px solid var(--color-border-tertiary)}
+h3{font-size:0.95rem;font-weight:500;margin:1.25rem 0 0.6rem;color:var(--color-text-secondary)}
+.tool{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden}
+.tool-tabs{display:flex;border-bottom:0.5px solid var(--color-border-tertiary)}
+.tab{flex:1;padding:0.75rem;font-size:14px;background:none;border:none;cursor:pointer;color:var(--color-text-secondary);font-family:var(--font-sans);transition:all 0.15s}
+.tab.active{color:var(--color-text-primary);background:var(--color-background-secondary);font-weight:500}
+.tool-body{padding:1.25rem}
+textarea{width:100%;resize:vertical;min-height:100px;font-family:var(--font-mono);font-size:14px;padding:0.75rem;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-secondary);color:var(--color-text-primary);outline:none;line-height:1.6}
+textarea:focus{border-color:var(--color-border-primary)}
+.output{margin-top:1rem;padding:0.75rem;background:var(--color-background-secondary);border-radius:var(--border-radius-md);font-family:var(--font-mono);font-size:14px;min-height:48px;color:var(--color-text-primary);line-height:1.6;word-break:break-all;white-space:pre-wrap}
+.output-label{font-size:12px;color:var(--color-text-secondary);margin-bottom:0.4rem}
+.map-table{width:100%;border-collapse:collapse;font-size:14px}
+.map-table th{text-align:left;font-weight:500;font-size:12px;color:var(--color-text-secondary);padding:6px 10px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.map-table td{padding:6px 10px;border-bottom:0.5px solid var(--color-border-tertiary);font-family:var(--font-mono)}
+.map-table tr:last-child td{border-bottom:none}
+.map-table tr:hover td{background:var(--color-background-secondary)}
+.table-wrap{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden}
+.section-note{font-size:12px;color:var(--color-text-tertiary);margin-top:0.6rem}
+.about-block{font-size:14px;line-height:1.8;color:var(--color-text-secondary)}
+.about-block p+p{margin-top:0.75rem}
+.about-imgs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:1rem 0}
+.about-imgs img{width:100%;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary)}
+.about-imgs .img-label{font-size:11px;color:var(--color-text-tertiary);text-align:center;margin-top:4px}
+.links{display:flex;gap:8px;margin-top:1rem}
+.link-btn{padding:6px 14px;font-size:13px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:none;cursor:pointer;color:var(--color-text-primary);font-family:var(--font-sans);text-decoration:none;display:inline-block}
+.link-btn:hover{background:var(--color-background-secondary)}
+footer{text-align:center;font-size:12px;color:var(--color-text-tertiary);padding:2rem 0 1rem;border-top:0.5px solid var(--color-border-tertiary);margin-top:2rem}
+</style>
+
+<div class="site">
+  <div class="hero">
+    <div class="badge">Substitution Cipher</div>
+    <h1>MobileKey Cipher</h1>
+    <p>A simple encoding scheme that maps letters to the<br>symbol layer of a mobile keyboard.</p>
+  </div>
+
+  <section>
+    <h2>Try it</h2>
+    <div class="tool">
+      <div class="tool-tabs">
+        <button class="tab active" onclick="setMode('encode')">Encode</button>
+        <button class="tab" onclick="setMode('decode')">Decode</button>
+      </div>
+      <div class="tool-body">
+        <textarea id="input" placeholder="Type something..." oninput="process()"></textarea>
+        <div class="output-label" id="out-label">Encoded</div>
+        <div class="output" id="output">—</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Mapping table</h2>
+    <h3>Letters</h3>
+    <div class="table-wrap">
+      <table class="map-table">
+        <thead><tr><th>Letter</th><th>Encoded</th></tr></thead>
+        <tbody id="letter-table"></tbody>
+      </table>
+    </div>
+    <h3>Punctuation <span style="font-size:11px;font-weight:400;color:var(--color-text-tertiary)">(custom)</span></h3>
+    <div class="table-wrap">
+      <table class="map-table">
+        <thead><tr><th>Symbol</th><th>Encoded</th></tr></thead>
+        <tbody id="punct-table"></tbody>
+      </table>
+    </div>
+    <p class="section-note">Based on the symbol layer of a standard QWERTY mobile keyboard. Punctuation mappings are custom — feel free to change them.</p>
+  </section>
+
+  <section>
+    <h2>About</h2>
+    <div class="about-block">
+      <p>MobileKey Cipher is a substitution cipher inspired by the symbol layer of a mobile keyboard, where each letter maps to the symbol or number you'd find on a phone's keyboard.</p>
+      <p>Think of it like leet speak, but instead of random substitutions, every mapping follows the logic of what's physically on your mobile keyboard.</p>
+      <p>It converts this:</p>
+      <div class="about-imgs">
+        <div>
+          <img src="https://github.com/user-attachments/assets/51190b2b-8e7e-4ae0-8176-c244f0dcf9d4" alt="Plain text input" />
+          <div class="img-label">Plain text</div>
+        </div>
+        <div>
+          <img src="https://github.com/user-attachments/assets/e2598d2c-7987-4628-bad4-8cf7a0456b03" alt="Encoded output" />
+          <div class="img-label">Encoded output</div>
+        </div>
+      </div>
+      <p>Not cryptographically secure — best used for fun, lore, ARGs, or light obfuscation.</p>
+    </div>
+    <div class="links">
+      <a class="link-btn" href="https://github.com" target="_blank">GitHub ↗</a>
+    </div>
+  </section>
+
+  <footer>MobileKey Cipher &mdash; MIT License</footer>
+</div>
+
+<script>
+const letters = {q:1,w:2,e:3,r:4,t:5,y:6,u:7,i:8,o:0,p:"/",a:"@",s:"#",d:"$",f:"_",g:"&",h:"-",j:"+",k:"(",l:")",z:"*",x:'"',c:"'",v:":",b:";",n:"!",m:"?"};
+const punct = {" ":"~",",":">","!":"<","'":"^","=":"="};
+const map = {...letters,...punct};
+const reverse = {};
+for(const [k,v] of Object.entries(map)) reverse[String(v)] = k;
+
+const lt = document.getElementById("letter-table");
+for(const [k,v] of Object.entries(letters)){
+  lt.innerHTML += `<tr><td>${k}</td><td>${v}</td></tr>`;
+}
+const pt = document.getElementById("punct-table");
+const pLabels = {" ":"(space)",",":"comma","!":"!","'":"'","=":"="};
+for(const [k,v] of Object.entries(punct)){
+  pt.innerHTML += `<tr><td>${pLabels[k]||k}</td><td>${v}</td></tr>`;
+}
+
+let mode = "encode";
+function setMode(m){
+  mode=m;
+  document.querySelectorAll(".tab").forEach((t,i)=>t.classList.toggle("active",(i===0&&m==="encode")||(i===1&&m==="decode")));
+  document.getElementById("out-label").textContent=m==="encode"?"Encoded":"Decoded";
+  document.getElementById("input").placeholder=m==="encode"?"Type something...":"Paste encoded text...";
+  process();
+}
+function encode(text){return text.split("").map(c=>{const l=c.toLowerCase();if(map[l]!==undefined)return String(map[l]);if(map[c]!==undefined)return String(map[c]);return c;}).join("");}
+function decode(text){return text.split("").map(c=>reverse[c]!==undefined?reverse[c]:c).join("");}
+function process(){const input=document.getElementById("input").value;document.getElementById("output").textContent=input?(mode==="encode"?encode(input):decode(input)):"—";}
+</script>
